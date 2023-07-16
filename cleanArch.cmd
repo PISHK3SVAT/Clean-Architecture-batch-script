@@ -59,6 +59,39 @@ if %createEndPointFlag%==t (
 	dotnet sln %projectName%.sln add %projectName%.Endpoint.%endPointTmplt% -s %presentationSolutionDir%
 )
 
+set EfCoreFlag=%3
+if [%EfCoreFlag%]==[] goto END
+if %EfCoreFlag%==t (
+	cd %projectName%.Application
+	:: add EFCore to application layer
+	dotnet add package Microsoft.EntityFrameworkCore
+
+	cd ..\%projectName%.Persistence
+	:: add EFCore to persistence layer
+	:: add EFCore.Design to persistence layer
+	:: add EFCore.Relational to persistence layer
+	:: add EFCore.SqlServer to persistence layer
+	:: add EFCore.Tools to persistence layer
+	dotnet add package Microsoft.EntityFrameworkCore
+	dotnet add package Microsoft.EntityFrameworkCore.Design
+	dotnet add package Microsoft.EntityFrameworkCore.Relational
+	dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+	dotnet add package Microsoft.EntityFrameworkCore.Tools
+
+	:: if endpoint layer exists add EFCore* to this layer
+	if %createEndPointFlag%==t (
+		cd ..\%projectName%.Endpoint.%endPointTmplt%
+		:: add EFCore to persistence layer
+		:: add EFCore.Design to persistence layer
+		:: add EFCore.SqlServer to persistence layer
+		dotnet add package Microsoft.EntityFrameworkCore
+		dotnet add package Microsoft.EntityFrameworkCore.Design
+		dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+	)
+
+	cd ..\
+)
+
 goto END
 
 :ERROR
