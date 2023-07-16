@@ -13,12 +13,15 @@ If you open the solution by visual studio, you're Solution Explorer contains the
 ![solution explorer after script is done](https://github.com/PISHK3SVAT/Clean-Architecture-batch-script/assets/51032328/adcef2d5-5604-4c81-a647-402af904c9cc)
 
 ## Overview
-This scripts takes 2 args:
+This scripts takes 3 args:
 * Project Name
-* Endpoint Template (optional)
+* Endpoint Template
+* EFCore install flag
 
-As you see above, first argument specifies you're solution name and also this is a prefix off all other class library name.
-The second argument as the name suggests, specifies the endpoint template that is match to dotnet template list, means that you can pass any of short name template of dotnet cli here.
+### Project Name
+This argument specifies you're solution name and also this is a prefix off all other class library name.
+### Endpoint Template
+This argument as the name suggests, specifies the endpoint template that is match to dotnet template list, means that you can pass any of "short name" template of dotnet cli here.
 you can see them by this command:
 ```
 dotnet new list
@@ -29,3 +32,21 @@ So you can pass each of the second column,as the second argument.
 
 If you don't pass anything as the second argument, clean architecture will created but without endpoint or presentation layer,
 so you can create that manualy later.
+### EFCore install flag
+If pass "t" to this argument, you have these libs on you're project:
+For Application layer:
+* Microsoft.`EntityFrameworkCore`
+
+For Persistence layer:
+* Microsoft.`EntityFrameworkCore`
+* Microsoft.EntityFrameworkCore.`Design`
+* Microsoft.EntityFrameworkCore.`Relational`
+*	Microsoft.EntityFrameworkCore.`SqlServer`
+*	Microsoft.EntityFrameworkCore.`Tools`
+
+For Presentation layer (if you created that):
+* Microsoft.`EntityFrameworkCore`
+* Microsoft.EntityFrameworkCore.`Design`
+*	Microsoft.EntityFrameworkCore.`SqlServer`
+
+Note that you can pass value to this arg only if you specified Endpoint Template befor.
